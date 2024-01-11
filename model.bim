@@ -186,7 +186,7 @@
             "source": {
               "expression": [
                 "let",
-                "    Source = Sql.Database(\"VIKTOR-PC-2001\", \"DividendPolicyResearch\", [Query=\"select * from dbo.tb_dividends#(lf)order by \"\"date\"\"#(lf)--where date_insert = (select max(date_insert) from dbo.tb_dividends)\"])",
+                "    Source = Sql.Database(\"VIKTOR-PC-2001\", \"DividendPolicyResearch\", [Query=\"select * from dbo.tb_dividends\"])",
                 "in",
                 "    Source"
               ],
