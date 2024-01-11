@@ -72,6 +72,10 @@
           {
             "name": "PBI_ResultType",
             "value": "Table"
+          },
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
           }
         ],
         "columns": [
@@ -81,10 +85,6 @@
               {
                 "name": "SummarizationSetBy",
                 "value": "Automatic"
-              },
-              {
-                "name": "UnderlyingDateTimeDataType",
-                "value": "Date"
               }
             ],
             "dataType": "dateTime",
@@ -186,10 +186,9 @@
             "source": {
               "expression": [
                 "let",
-                "    Source = Sql.Database(\"VIKTOR-PC-2001\", \"DividendPolicyResearch\"),",
-                "    dbo_tb_dividends = Source{[Schema=\"dbo\",Item=\"tb_dividends\"]}[Data]",
+                "    Source = Sql.Database(\"VIKTOR-PC-2001\", \"DividendPolicyResearch\", [Query=\"select * from dbo.tb_dividends#(lf)order by \"\"date\"\"#(lf)--where date_insert = (select max(date_insert) from dbo.tb_dividends)\"])",
                 "in",
-                "    dbo_tb_dividends"
+                "    Source"
               ],
               "type": "m"
             }
