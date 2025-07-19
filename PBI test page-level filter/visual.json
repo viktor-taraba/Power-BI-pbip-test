@@ -1,15 +1,15 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.1.0/schema.json",
-  "name": "7033f1a6394e43e2e400",
+  "name": "ff8d1c3fba1f5786a172",
   "position": {
-    "x": 652.36051502145926,
+    "x": 365.42713567839195,
     "y": 0,
-    "z": 1000,
-    "height": 719.656652360515,
-    "width": 594.67811158798281
+    "z": 0,
+    "height": 412.46231155778889,
+    "width": 914.17085427135669
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "clusteredBarChart",
     "query": {
       "queryState": {
         "Category": {
@@ -19,31 +19,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Time"
-                    }
-                  },
-                  "Property": "Decade"
-                }
-              },
-              "queryRef": "Time.Decade",
-              "active": true
-            }
-          ]
-        },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "Subsector"
+                      "Entity": "Industry"
                     }
                   },
                   "Property": "Subsector"
                 }
               },
-              "queryRef": "Subsector.Subsector"
+              "queryRef": "Industry.Subsector",
+              "active": true
             }
           ]
         },
@@ -94,17 +77,57 @@
         "isDefaultSort": true
       }
     },
+    "objects": {
+      "categoryAxis": [
+        {
+          "properties": {
+            "maxMarginFactor": {
+              "expr": {
+                "Literal": {
+                  "Value": "42L"
+                }
+              }
+            },
+            "switchAxisPosition": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "concatenateLabels": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataPoint": [
+        {
+          "properties": {
+            "fill": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 4,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
     "visualContainerObjects": {
       "title": [
         {
           "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Snowflake schema'"
-                }
-              }
-            },
             "fontColor": {
               "solid": {
                 "color": {
@@ -122,7 +145,7 @@
                 "color": {
                   "expr": {
                     "ThemeDataColor": {
-                      "ColorId": 9,
+                      "ColorId": 3,
                       "Percent": 0
                     }
                   }
@@ -141,5 +164,42 @@
       ]
     },
     "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "e75019efc6b1b9ea5345",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Industry"
+              }
+            },
+            "Property": "Subsector"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "261cfd5e4a943636efcc",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Establishment Survey"
+                  }
+                },
+                "Property": "Number of employees"
+              }
+            },
+            "Function": 1
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
   }
 }
