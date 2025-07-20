@@ -1,0 +1,103 @@
+table 'Establishment Survey'
+	lineageTag: 1f7e0467-04d8-4358-a1a9-58845f0cae0c
+
+	measure TotalEmpl = CALCULATE(SUM('Establishment Survey'[Number of employees]),'Establishment Survey'[Year]>=2010)
+		formatString: 0
+		lineageTag: 6817e065-143d-4979-9ba8-1781acdd5cf4
+
+	column Id
+		dataType: int64
+		formatString: 0
+		lineageTag: 3ba8f9ac-35ea-4696-bb43-2e0c04e9d2a6
+		summarizeBy: count
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Age code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ba2110d-a8ba-406e-8feb-41499bc388a1
+		summarizeBy: none
+		sourceColumn: Age code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 05aea2f2-aa48-41ef-902d-8af73b09b27f
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NAICS code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 175b9c79-4d64-46b9-9e8e-28906228ccbd
+		summarizeBy: none
+		sourceColumn: NAICS code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Number of firms'
+		dataType: int64
+		formatString: 0
+		lineageTag: f3ef53b7-fc84-4531-bc71-35b1c941b7c2
+		summarizeBy: sum
+		sourceColumn: Number of firms
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Number of establishments'
+		dataType: int64
+		formatString: 0
+		lineageTag: 2fbb4b2d-041a-4ff2-83de-8ffe7c448a53
+		summarizeBy: sum
+		sourceColumn: Number of establishments
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Number of employees'
+		dataType: int64
+		formatString: 0
+		lineageTag: ef4fa4c1-1f98-45e6-95f8-259a571703c7
+		summarizeBy: sum
+		sourceColumn: Number of employees
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Number of establishments born'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6fd2c52c-8bb2-48f5-ab94-a048d5bf4be5
+		summarizeBy: sum
+		sourceColumn: Number of establishments born
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Number of establishments exited'
+		dataType: int64
+		formatString: 0
+		lineageTag: c366e7c9-9cc1-4189-b054-697fcf4b3378
+		summarizeBy: sum
+		sourceColumn: Number of establishments exited
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Establishment Survey-4e2db162-88d1-49e6-a55e-4561dd0b9781' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Datacamp\Data Modeling in Power BI\Datasets\Establishment Survey.csv"),[Delimiter=",", Columns=16, Encoding=1251, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", Int64.Type}, {"Age code", Int64.Type}, {"Year", Int64.Type}, {"NAICS code", Int64.Type}, {"Number of firms", Int64.Type}, {"Number of establishments", Int64.Type}, {"Number of employees", Int64.Type}, {"Number of establishments born", Int64.Type}, {"Number of establishments exited", Int64.Type}, {"NAICS code description", type text}, {"Industry group code", Int64.Type}, {"Industry group", type text}, {"Subsector code", Int64.Type}, {"Subsector", type text}, {"Sector code", Int64.Type}, {"Sector", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"NAICS code description", "Industry group code", "Industry group", "Subsector code", "Subsector", "Sector code", "Sector"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

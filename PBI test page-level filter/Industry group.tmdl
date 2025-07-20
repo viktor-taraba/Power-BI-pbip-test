@@ -1,0 +1,47 @@
+table 'Industry group'
+	lineageTag: e4c13bcc-0895-4c80-901e-afd11259dc3d
+
+	column 'Industry group code'
+		dataType: int64
+		formatString: 0
+		lineageTag: d22116c4-cf44-49de-8b71-5f050fade2a0
+		summarizeBy: none
+		sourceColumn: Industry group code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Industry group'
+		dataType: string
+		lineageTag: c0520426-f2f3-414c-b8ec-29d272f80f2f
+		summarizeBy: none
+		sourceColumn: Industry group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NAICS code'
+		dataType: int64
+		formatString: 0
+		lineageTag: ac6dd208-1995-4bcc-9ce8-4b4f65303222
+		summarizeBy: none
+		sourceColumn: NAICS code
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Industry group-bfb745f1-e605-497b-b889-64cd2f1b1416' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Datacamp\Data Modeling in Power BI\Datasets\Establishment Survey.csv"),[Delimiter=",", Columns=16, Encoding=1251, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", Int64.Type}, {"Age code", Int64.Type}, {"Year", Int64.Type}, {"NAICS code", Int64.Type}, {"Number of firms", Int64.Type}, {"Number of establishments", Int64.Type}, {"Number of employees", Int64.Type}, {"Number of establishments born", Int64.Type}, {"Number of establishments exited", Int64.Type}, {"NAICS code description", type text}, {"Industry group code", Int64.Type}, {"Industry group", type text}, {"Subsector code", Int64.Type}, {"Subsector", type text}, {"Sector code", Int64.Type}, {"Sector", type text}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"NAICS code", "NAICS code description", "Industry group code", "Industry group", "Subsector code", "Subsector", "Sector code", "Sector"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"NAICS code"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Removed Duplicates",{"Industry group code", "Industry group", "NAICS code"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Other Columns1", {"Industry group"})
+				in
+				    #"Removed Duplicates1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

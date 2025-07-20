@@ -1,0 +1,91 @@
+table Industry
+	lineageTag: 8f6c61ae-4b29-4407-a45c-a653bc31243d
+
+	measure 'CountDistinct Ind' = DISTINCTCOUNT('Industry group'[Industry group])
+		formatString: 0
+		lineageTag: 16862881-d53d-4c63-b939-b1a704936ffb
+
+	column 'NAICS code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 85dcbb45-de0b-4c44-9988-cf04625ac0c3
+		summarizeBy: none
+		sourceColumn: NAICS code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NAICS code description'
+		dataType: string
+		lineageTag: c68c797a-264b-4ddb-a1d5-6a5121000edc
+		summarizeBy: none
+		sourceColumn: NAICS code description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Industry group code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 89db1047-fdf1-4c60-aa44-d6d3a495b08f
+		summarizeBy: none
+		sourceColumn: Industry group code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Industry group'
+		dataType: string
+		lineageTag: 78aff9de-ccc5-4c93-9e69-5c783ada40e4
+		summarizeBy: none
+		sourceColumn: Industry group
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Subsector code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 93548d12-ac9b-46bb-a9b2-7daa7d6d2604
+		summarizeBy: none
+		sourceColumn: Subsector code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subsector
+		dataType: string
+		lineageTag: 91bef141-2feb-4edf-8b92-fbfaee6357f4
+		summarizeBy: none
+		sourceColumn: Subsector
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sector code'
+		dataType: int64
+		formatString: 0
+		lineageTag: efafc570-d4f4-49b3-84ca-6c96ad1f403a
+		summarizeBy: none
+		sourceColumn: Sector code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sector
+		dataType: string
+		lineageTag: 0dc35cc8-a054-4f92-8441-5d7806f70732
+		summarizeBy: none
+		sourceColumn: Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Industry-65bebd3b-6fe3-4264-a845-e89000f72701 = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Datacamp\Data Modeling in Power BI\Datasets\Establishment Survey.csv"),[Delimiter=",", Columns=16, Encoding=1251, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", Int64.Type}, {"Age code", Int64.Type}, {"Year", Int64.Type}, {"NAICS code", Int64.Type}, {"Number of firms", Int64.Type}, {"Number of establishments", Int64.Type}, {"Number of employees", Int64.Type}, {"Number of establishments born", Int64.Type}, {"Number of establishments exited", Int64.Type}, {"NAICS code description", type text}, {"Industry group code", Int64.Type}, {"Industry group", type text}, {"Subsector code", Int64.Type}, {"Subsector", type text}, {"Sector code", Int64.Type}, {"Sector", type text}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"NAICS code", "NAICS code description", "Industry group code", "Industry group", "Subsector code", "Subsector", "Sector code", "Sector"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"NAICS code"})
+				in
+				    #"Removed Duplicates"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
