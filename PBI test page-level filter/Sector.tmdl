@@ -1,0 +1,47 @@
+table Sector
+	lineageTag: e375ed5f-8114-458f-97a3-2fc1a7b56529
+
+	column 'Subsector code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 465356fe-9680-4373-bd93-3d91b79aee12
+		summarizeBy: none
+		sourceColumn: Subsector code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Sector code'
+		dataType: int64
+		formatString: 0
+		lineageTag: d018cb20-04c8-449d-9775-1830bdb713fa
+		summarizeBy: sum
+		sourceColumn: Sector code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sector
+		dataType: string
+		lineageTag: acbcfdf2-b4e0-4c68-a5ed-dfae4b4ca3ed
+		summarizeBy: none
+		sourceColumn: Sector
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sector-6a8e6772-cc67-46b6-9bd1-667c60ba7e89 = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Datacamp\Data Modeling in Power BI\Datasets\Establishment Survey.csv"),[Delimiter=",", Columns=16, Encoding=1251, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", Int64.Type}, {"Age code", Int64.Type}, {"Year", Int64.Type}, {"NAICS code", Int64.Type}, {"Number of firms", Int64.Type}, {"Number of establishments", Int64.Type}, {"Number of employees", Int64.Type}, {"Number of establishments born", Int64.Type}, {"Number of establishments exited", Int64.Type}, {"NAICS code description", type text}, {"Industry group code", Int64.Type}, {"Industry group", type text}, {"Subsector code", Int64.Type}, {"Subsector", type text}, {"Sector code", Int64.Type}, {"Sector", type text}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"NAICS code", "NAICS code description", "Industry group code", "Industry group", "Subsector code", "Subsector", "Sector code", "Sector"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"NAICS code"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Removed Duplicates",{"Subsector code", "Sector code", "Sector"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Other Columns1", {"Sector code"})
+				in
+				    #"Removed Duplicates1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

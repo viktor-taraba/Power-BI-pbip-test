@@ -1,0 +1,38 @@
+table 'NAICS code'
+	lineageTag: ef57905d-dcf4-426c-a272-ed72de11723c
+
+	column 'NAICS code description'
+		dataType: string
+		lineageTag: 9096094f-5bbe-4475-be34-20d3ff89505c
+		summarizeBy: none
+		sourceColumn: NAICS code description
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'NAICS code'
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b0de3a5-2ca0-476b-8c6f-05bcfec75d2e
+		summarizeBy: none
+		sourceColumn: NAICS code
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'NAICS code-49625745-c77f-4c2a-b9d3-294438cbc434' = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Datacamp\Data Modeling in Power BI\Datasets\Establishment Survey.csv"),[Delimiter=",", Columns=16, Encoding=1251, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Id", Int64.Type}, {"Age code", Int64.Type}, {"Year", Int64.Type}, {"NAICS code", Int64.Type}, {"Number of firms", Int64.Type}, {"Number of establishments", Int64.Type}, {"Number of employees", Int64.Type}, {"Number of establishments born", Int64.Type}, {"Number of establishments exited", Int64.Type}, {"NAICS code description", type text}, {"Industry group code", Int64.Type}, {"Industry group", type text}, {"Subsector code", Int64.Type}, {"Subsector", type text}, {"Sector code", Int64.Type}, {"Sector", type text}}),
+				    #"Removed Other Columns" = Table.SelectColumns(#"Changed Type",{"NAICS code", "NAICS code description", "Industry group code", "Industry group", "Subsector code", "Subsector", "Sector code", "Sector"}),
+				    #"Removed Duplicates" = Table.Distinct(#"Removed Other Columns", {"NAICS code"}),
+				    #"Removed Other Columns1" = Table.SelectColumns(#"Removed Duplicates",{"NAICS code description", "NAICS code"}),
+				    #"Removed Duplicates1" = Table.Distinct(#"Removed Other Columns1")
+				in
+				    #"Removed Duplicates1"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

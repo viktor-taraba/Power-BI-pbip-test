@@ -1,0 +1,42 @@
+table Time
+	lineageTag: d7d09a9f-5fb2-457a-b067-4ff34fdfafc6
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 3a3b5b65-8c89-4882-a6f3-e376d4135b42
+		summarizeBy: none
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column Decade
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c264be7-f95c-46a0-8876-49870d28ef30
+		summarizeBy: none
+		sourceColumn: Decade
+
+		annotation SummarizationSetBy = Automatic
+
+	column Century
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ed4c934-e5cb-4a67-b5a1-77d08be5a7fd
+		summarizeBy: none
+		sourceColumn: Century
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Time-61c6c21f-7d13-40ed-8b62-6941fa8b5a1d = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("D:\Datacamp\Data Modeling in Power BI\Datasets\Time.txt"),[Delimiter="	", Columns=3, Encoding=1251, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"Year", Int64.Type}, {"Decade", Int64.Type}, {"Century", Int64.Type}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

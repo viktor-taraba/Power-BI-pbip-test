@@ -1,9 +1,13 @@
 table 'Establishment Survey'
 	lineageTag: 1f7e0467-04d8-4358-a1a9-58845f0cae0c
 
+	/// test measure description
 	measure TotalEmpl = CALCULATE(SUM('Establishment Survey'[Number of employees]),'Establishment Survey'[Year]>=2010)
 		formatString: 0
+		displayFolder: Survey_measures
 		lineageTag: 6817e065-143d-4979-9ba8-1781acdd5cf4
+
+		changedProperty = IsHidden
 
 	column Id
 		dataType: int64
