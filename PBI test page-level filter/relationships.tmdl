@@ -1,0 +1,34 @@
+relationship fbbc009f-7ca2-4543-80f9-3f92caa9bd56
+	fromColumn: 'Establishment Survey'.'NAICS code'
+	toColumn: Industry.'NAICS code'
+
+relationship 1d51485e-7ef5-4e5b-a908-c6b579def3de
+	fromColumn: 'Establishment Survey'.Year
+	toColumn: Time.Year
+
+relationship d87d6ada-db4b-47f8-8a44-36ada34c168d
+	fromColumn: 'Establishment Survey'.'Age code'
+	toColumn: Age.'Age code'
+
+relationship 910404ec-c4a7-42de-9593-90b1ac0c551e
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Subsector.'Industry group code'
+	toColumn: 'Industry group'.'Industry group code'
+
+relationship cc0b66ce-bb14-445e-92ec-88b6ac226005
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Sector.'Subsector code'
+	toColumn: Subsector.'Subsector code'
+
+relationship 5c39d0b7-63b6-4672-aa30-b96dc3a5252b
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: 'Industry group'.'NAICS code'
+	toColumn: 'NAICS code'.'NAICS code'
+
+relationship e6b233a1-14ec-4320-a601-9d105ed7ea66
+	fromColumn: 'Establishment Survey'.'NAICS code'
+	toColumn: 'NAICS code'.'NAICS code'
+

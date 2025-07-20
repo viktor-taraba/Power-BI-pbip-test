@@ -1,0 +1,28 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: uk-UA
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBIDesktopVersion = 2.145.1105.0 (25.07)+decbc46fce458c5b8d5109d6f32a743f2ac949c8
+
+annotation PBI_QueryOrder = ["Establishment Survey","Industry","Time","Age","NAICS code","Industry group","Subsector","Sector"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'Establishment Survey'
+ref table DateTableTemplate_7f04e6e0-0114-439f-bc6f-5b6af7f9a6c7
+ref table Industry
+ref table Time
+ref table Age
+ref table 'NAICS code'
+ref table 'Industry group'
+ref table Subsector
+ref table Sector
+
+ref cultureInfo en-US
+

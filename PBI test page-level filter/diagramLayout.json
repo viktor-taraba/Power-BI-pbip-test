@@ -1,0 +1,118 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 249,
+        "y": 213
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 249,
+            "y": 232.80000305175781
+          },
+          "nodeIndex": "Establishment Survey",
+          "size": {
+            "height": 306,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 562.2,
+            "y": 213
+          },
+          "nodeIndex": "Industry",
+          "size": {
+            "height": 272,
+            "width": 234
+          },
+          "zIndex": 1
+        },
+        {
+          "location": {
+            "x": 370.6,
+            "y": 0
+          },
+          "nodeIndex": "Time",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 0,
+            "y": 21.600006103515625
+          },
+          "nodeIndex": "Age",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 956.30000610351567,
+            "y": 524
+          },
+          "nodeIndex": "Industry group",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 593.29994506835942,
+            "y": 532.2
+          },
+          "nodeIndex": "NAICS code",
+          "size": {
+            "height": 128,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 596.09999999999991,
+            "y": 719
+          },
+          "nodeIndex": "Sector",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 962.59999999999991,
+            "y": 720.5
+          },
+          "nodeIndex": "Subsector",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}
